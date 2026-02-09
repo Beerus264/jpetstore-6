@@ -1,5 +1,5 @@
 #
-#    Copyright 2010-2023 the original author or authors.
+#    Copyright 2010-2026 the original author or authors.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License");
 #    you may not use this file except in compliance with the License.
@@ -14,8 +14,12 @@
 #    limitations under the License.
 #
 
-FROM openjdk:17.0.2
-COPY . /usr/src/myapp
-WORKDIR /usr/src/myapp
-RUN ./mvnw clean package
-CMD ./mvnw cargo:run -P tomcat90
+FROM openjdk:17-jdk-alpine
+
+WORKDIR /app
+
+COPY target/jpetstore.war ./jpetstore.war
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "jpetstore.war"]
